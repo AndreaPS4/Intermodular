@@ -4,6 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            localStorage.setItem("modoOscuro", document.body.classList.contains("dark-mode") ? "activado" : "desactivado");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("modoOscuro") === "activado") {
+                document.body.classList.add("dark-mode");
+            }
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            const cartContainer = document.getElementById("cart-container");
+            const subtotalElement = document.getElementById("subtotal");
+
+            function calculateSubtotal() {
+                return cart.reduce((total, item) => {
+                    const priceNumber = parseFloat(item.price.replace(/[^\d.,]/g, '').replace(',', '.')) || 0;
+                    return total + priceNumber;
+                }, 0).toFixed(2); 
+            }
+
+            function updateSubtotal() {
+                const subtotal = calculateSubtotal();
+                subtotalElement.textContent = `Subtotal: ${subtotal}€`;
+            }
+
+            function renderCart() {
+            cartContainer.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = "<p>El carrito está vacío.</p>";
+            } else {
+                cart.forEach((item, index) => {
+                    const div = document.createElement("div");
+                    div.classList.add("cart-item");
+                    div.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.title}">
+                        <div class="cart-details">
+                            <h3>${item.title}</h3>
+                            <p>${item.price}</p>
+                        </div>
+                        <button onclick="removeItem(${index})">Eliminar</button>
+                    `;
+                    cartContainer.appendChild(div);
+                });
+            }
+
+            updateSubtotal();
+        }
+
+            window.removeItem = function (index) {
+                cart.splice(index, 1); 
+                localStorage.setItem("cart", JSON.stringify(cart));
+                renderCart();
+            };
+            document.getElementById("clear-cart").addEventListener("click", function () {
+                cart = [];
+                localStorage.removeItem("cart");
+                renderCart();
+            });
+
+            renderCart();
+        });
+    </script>
 </head>
 <body>
     <header>
