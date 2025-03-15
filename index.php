@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chimichurri Cómics</title>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("modoOscuro", "activado");
+            } else {
+                localStorage.setItem("modoOscuro", "desactivado");
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("modoOscuro") === "activado") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
