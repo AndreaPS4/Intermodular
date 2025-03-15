@@ -110,5 +110,30 @@
             prevBtn.addEventListener("click", () => moveCarousel("prev"));
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        // Función para agregar un producto al carrito
+        function addToCart(title, price, imgSrc) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || []; // Obtener carrito actual
+
+            // Agregar nuevo producto
+            cart.push({ title, price, imgSrc });
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert("Producto agregado al carrito");
+        }
+
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const libro = this.closest(".libro");
+                const title = libro.querySelector("h3").innerText;
+                const price = libro.querySelector("p").innerText;
+                const imgSrc = libro.querySelector("img").src;
+
+                addToCart(title, price, imgSrc);
+            });
+        });
+        });
+    </script>
 </body>
 </html>
