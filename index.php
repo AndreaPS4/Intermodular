@@ -45,6 +45,7 @@
                 </ul>
             </nav>
         </div>
+        <button class="modo-oscuro" onclick="toggleDarkMode()">Modo Oscuro</button>
     </header>
     <main>
         <section class="hero">
@@ -87,5 +88,27 @@
     <footer>
         <p>&copy; 2025 Chimichurri Comics. Todos los derechos reservados.</p>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const track = document.querySelector(".carousel-track");
+            const prevBtn = document.querySelector(".prev");
+            const nextBtn = document.querySelector(".next");
+            let index = 0;
+            const totalItems = track.children.length;
+            const visibleItems = 3;
+            
+            function moveCarousel(direction) {
+                if (direction === "next") {
+                    index = (index + 1) % Math.max(totalItems - visibleItems + 1, 1);
+                } else {
+                    index = (index - 1 + Math.max(totalItems - visibleItems + 1, 1)) % Math.max(totalItems - visibleItems + 1, 1);
+                }
+                track.style.transform = `translateX(-${index * (100 / visibleItems)}%)`;
+            }
+
+            nextBtn.addEventListener("click", () => moveCarousel("next"));
+            prevBtn.addEventListener("click", () => moveCarousel("prev"));
+        });
+    </script>
 </body>
 </html>
