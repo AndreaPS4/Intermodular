@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chimichurri Cómics</title>
+    <link rel="stylesheet" href="css/registrar.css">
     <script>
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
