@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chimichurri Cómics</title>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("modoOscuro", "activado");
+            } else {
+                localStorage.setItem("modoOscuro", "desactivado");
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("modoOscuro") === "activado") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -30,6 +45,7 @@
                 </ul>
             </nav>
         </div>
+        <button class="modo-oscuro" onclick="toggleDarkMode()">Modo Oscuro</button>
     </header>
     <main>
         <section class="hero">
@@ -72,5 +88,52 @@
     <footer>
         <p>&copy; 2025 Chimichurri Comics. Todos los derechos reservados.</p>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const track = document.querySelector(".carousel-track");
+            const prevBtn = document.querySelector(".prev");
+            const nextBtn = document.querySelector(".next");
+            let index = 0;
+            const totalItems = track.children.length;
+            const visibleItems = 3;
+            
+            function moveCarousel(direction) {
+                if (direction === "next") {
+                    index = (index + 1) % Math.max(totalItems - visibleItems + 1, 1);
+                } else {
+                    index = (index - 1 + Math.max(totalItems - visibleItems + 1, 1)) % Math.max(totalItems - visibleItems + 1, 1);
+                }
+                track.style.transform = `translateX(-${index * (100 / visibleItems)}%)`;
+            }
+
+            nextBtn.addEventListener("click", () => moveCarousel("next"));
+            prevBtn.addEventListener("click", () => moveCarousel("prev"));
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        // Función para agregar un producto al carrito
+        function addToCart(title, price, imgSrc) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || []; // Obtener carrito actual
+
+            // Agregar nuevo producto
+            cart.push({ title, price, imgSrc });
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert("Producto agregado al carrito");
+        }
+
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const libro = this.closest(".libro");
+                const title = libro.querySelector("h3").innerText;
+                const price = libro.querySelector("p").innerText;
+                const imgSrc = libro.querySelector("img").src;
+
+                addToCart(title, price, imgSrc);
+            });
+        });
+        });
+    </script>
 </body>
 </html>
