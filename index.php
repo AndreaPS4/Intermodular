@@ -6,7 +6,7 @@
     <title>Chimichurri Cómics</title>
 </head>
 <body>
-<header>
+    <header>
         <div class="header-container">
             <div class="logo">
                 <img src="img/logo.png" class="icono" alt="Logo de Chimichurri Cómics">
@@ -31,5 +31,43 @@
             </nav>
         </div>
     </header>
+    <main>
+        <section class="hero">
+            <h1>Bienvenidos a Chimichurri Cómics</h1>
+            <p>Échandole picante a tus aventuras desde 2025</p>
+        </section>
+        <section class="novedades">
+            <h2>Novedades</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn prev">❮</button>
+                <div class="carousel">
+                    <div class="carousel-track">
+                    <?php
+                            // Consulta SQL
+                            $sql = "SELECT imagen, nombre, precio FROM productos ORDER BY id DESC LIMIT 8";
+                            $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<div class="libro">';
+                            echo '<img src="' . $row["imagen"] . '" alt="' . $row["nombre"] . '">';
+                            echo '<h3>' . $row["nombre"] . '</h3>';
+                            echo '<p>' . number_format($row["precio"], 2) . '€</p>';
+                            echo '<button class="add-to-cart" onclick="window.location.href=\'carrito.html\'">Agregar al carrito</button>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "<p>No hay productos disponibles.</p>";
+                    }
+            ?>
+        </div>
+    </div>
+    <button class="carousel-btn next">❯</button>
+                    </div>
+                </div>
+                <button class="carousel-btn next">❯</button>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
